@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>monkeydbus</title>
+    <link>http://localhost:1313/</link>
+    <description>Recent content on monkeydbus</description>
+    <generator>Hugo -- 0.152.2</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 04 Nov 2025 23:33:37 +0100</lastBuildDate>
+    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Welcome bbg</title>
+      <link>http://localhost:1313/posts/hello/</link>
+      <pubDate>Tue, 04 Nov 2025 23:33:37 +0100</pubDate>
+      <guid>http://localhost:1313/posts/hello/</guid>
+      <description>&lt;p&gt;Hello twin!! Idk what you&amp;rsquo;re doing here but nice to see you.&lt;br&gt;
+If you want to know more about me, go &lt;a href=&#34;https://bento.me/monkeydbus&#34;&gt;there&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
