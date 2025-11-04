@@ -1,0 +1,7 @@
+baseURL = 'https://m0nkeydbus.github.io/'
+languageCode = 'en-us'
+title = 'monkeydbus'
+theme = 'PaperMod'
+
+[params]
+  ShowReadingTime = true
