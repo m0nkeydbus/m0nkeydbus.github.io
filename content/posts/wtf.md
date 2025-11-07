@@ -6,6 +6,6 @@ title = 'Wtf'
 
 Salut ! Aucune idée de ce que tu fais là mdr.  
 Le but du blog est un peu de faire des posts en français, des writeups, des tips, etc...  
-C'est vraiment le début, j'ai crée ça il y a une semaine 😁  
+C'est vraiment le début, j'ai créé ça il y a une semaine 😁  
 
 Si tu veux plus d'infos sur moi, viens voir mon bento: [https://bento.me/monkeydbus](https://bento.me/monkeydbus)
