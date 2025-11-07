@@ -1,4 +1,8 @@
-# Ma baguette, mon béret et mon container exegol
++++
+date = '2025-11-07T12:04:07+01:00'
+draft = false
+title = 'Ma baguette, mon béret et mon container exegol'
++++
 
 Tout pentester ou amoureux de CTF qui se respecte a sûrement déjà lancé sa  machine Kali en adoration des outils présents dessus.  
 Mais au bout d'un moment, la distro ne tourne plus, les outils ne sont pas bien configurés ou installés, et le côté cybersécurité laisse place à de la configuration d'OS. Et aussi, compliqué de lancer une game valo (pas vrai @CynOx).
