@@ -100,7 +100,8 @@ Première partie de faite !
 
 # Root.txt
 
-Dans les services présents sur la machine, on retrouve notre cher check_mk. Celui-ci est une vielle version à multiples failles, la version 2.1.0. Après un peu de recherches, on tombe sur cette CVE qui nous paraît intéressante: https://sec-consult.com/vulnerability-lab/advisory/local-privilege-escalation-via-writable-files-in-checkmk-agent/
+Dans les services présents sur la machine, on retrouve notre cher check_mk. Celui-ci est une vielle version à multiples failles, la version 2.1.0. Après un peu de recherches, on tombe sur cette CVE qui nous paraît intéressante:  
+- https://sec-consult.com/vulnerability-lab/advisory/local-privilege-escalation-via-writable-files-in-checkmk-agent/
 
 Néanmoins, on ne peut pas écrire dans le dossier `C:/Windows/Temp`. Alors que fait-on ?  
 
@@ -121,7 +122,9 @@ Après un peu de lecture de la vulnérabilité (à l'aide du site présent au de
 
 ---
 
-Pour trouver le bon fichier .msi (Relisez bien l'exploit si vous ne savez pas de quoi je parle), on peut chercher tous les fichiers .msi associés à check_mk. On trouve C:\Windows\Installer\1e6f2.msi.  
+Pour trouver le bon fichier .msi (Relisez bien l'exploit si vous ne savez pas de quoi je parle), on peut chercher tous les fichiers .msi associés à check_mk.  
+On trouve `C:\Windows\Installer\1e6f2.msi`.  
+
 On se fait donc un petit script `exploit.ps1` pour juste afficher le fichier root.txt.  
 
 ```powershell
